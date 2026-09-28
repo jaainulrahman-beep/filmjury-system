@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Film Entry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="container nav">
+            <div class="brand">
+                <span class="brand-mark">SF</span>
+                <span>Short Film Contest</span>
+            </div>
+            <nav>
+                <a href="/">Dashboard</a>
+                <a href="/entries">Submit Entry</a>
+                <a href="/judges">Judges</a>
+                <a href="/scores">Scoring</a>
+                <a href="/leaderboard">Leaderboard</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-shell">
+        <div class="container content-grid">
+            <section class="panel">
+                <p class="section-kicker">Film submission</p>
+                <h2>Submit a new entry</h2>
+                <form class="form-card" th:object="${entry}" th:action="@{/entries}" method="post">
+                    <label>
+                        Title
+                        <input type="text" th:field="*{title}" placeholder="Example: Midnight Run" required>
+                    </label>
+                    <label>
+                        Genre
+                        <input type="text" th:field="*{genre}" placeholder="Drama, Thriller, Comedy..." required>
+                    </label>
+                    <label>
+                        Video link
+                        <input type="url" th:field="*{videoLink}" placeholder="https://" required>
+                    </label>
+                    <label>
+                        Team name
+                        <input type="text" th:field="*{teamName}" placeholder="Northlight Studio" required>
+                    </label>
+                    <button type="submit" class="primary-btn">Save entry</button>
+                </form>
+            </section>
+
+            <section class="panel">
+                <p class="section-kicker">Current entries</p>
+                <h2>Submitted films</h2>
+                <div th:if="${#lists.isEmpty(entries)}" class="empty-state">
+                    No films have been submitted yet.
+                </div>
+                <div class="entry-list" th:unless="${#lists.isEmpty(entries)}">
+                    <div class="entry-item" th:each="entry : ${entries}">
+                        <strong th:text="${entry.title}">Film title</strong>
+                        <span th:text="${entry.genre}">Genre</span>
+                        <a th:href="${entry.videoLink}" target="_blank" rel="noreferrer">Open video</a>
+                        <small th:text="${entry.teamName}">Team</small>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

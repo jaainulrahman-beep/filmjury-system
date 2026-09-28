@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="container nav">
+            <div class="brand">
+                <span class="brand-mark">SF</span>
+                <span>Short Film Contest</span>
+            </div>
+            <nav>
+                <a href="/">Dashboard</a>
+                <a href="/entries">Submit Entry</a>
+                <a href="/judges">Judges</a>
+                <a href="/scores">Scoring</a>
+                <a href="/leaderboard">Leaderboard</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-shell">
+        <div class="container panel">
+            <p class="section-kicker">Final ranking</p>
+            <h2>Leaderboard</h2>
+
+            <div class="table-wrap" th:if="${!#lists.isEmpty(leaderboard)}">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Entry</th>
+                            <th>Genre</th>
+                            <th>Reviews</th>
+                            <th>Average</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="row, iter : ${leaderboard}">
+                            <td th:text="${iter.index + 1}">1</td>
+                            <td th:text="${row.entry.title}">Title</td>
+                            <td th:text="${row.entry.genre}">Genre</td>
+                            <td th:text="${row.reviewCount}">0</td>
+                            <td th:text="${#numbers.formatDecimal(row.averageScore, 1, 2)} + ' / 10'">0.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="empty-state" th:unless="${!#lists.isEmpty(leaderboard)}">
+                No scores have been submitted yet. Start by adding entries, assigning judges, and scoring each film.
+            </div>
+        </div>
+    </main>
+</body>
+</html>

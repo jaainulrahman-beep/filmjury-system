@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Short Film Contest Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="container nav">
+            <div class="brand">
+                <span class="brand-mark">SF</span>
+                <span>Short Film Contest</span>
+            </div>
+            <nav>
+                <a href="/">Dashboard</a>
+                <a href="/entries">Submit Entry</a>
+                <a href="/judges">Judges</a>
+                <a href="/scores">Scoring</a>
+                <a href="/leaderboard">Leaderboard</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero dashboard-hero">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <p class="eyebrow">Film competition dashboard</p>
+                    <h1>Track every entry, judge, and result in one place.</h1>
+                    <p class="lead">
+                        Submit entries, assign judges, rate each film against fixed criteria, and rank finalists by average score.
+                    </p>
+                    <div class="cta-row">
+                        <a class="primary-btn" href="/entries">Submit an entry</a>
+                        <a class="secondary-btn" href="/leaderboard">View leaderboard</a>
+                    </div>
+                </div>
+                <div class="hero-card">
+                    <div class="ticket">
+                        <span class="ticket-tag">Live status</span>
+                        <h2>Contest</h2>
+                        <p>Entries: <strong th:text="${entryCount}">0</strong></p>
+                        <p>Judges: <strong th:text="${judgeCount}">0</strong></p>
+                        <ul>
+                            <li>Entry submission</li>
+                            <li>Judge assignment</li>
+                            <li>Scoring workflow</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container stats-grid">
+                <div class="stat-card">
+                    <strong th:text="${entryCount}">0</strong>
+                    <span>Total entries</span>
+                </div>
+                <div class="stat-card">
+                    <strong th:text="${judgeCount}">0</strong>
+                    <span>Assigned judges</span>
+                </div>
+                <div class="stat-card">
+                    <strong th:text="${leaderboard != null && !leaderboard.isEmpty() ? leaderboard.get(0).averageScore : '0.0'}">0.0</strong>
+                    <span>Top average</span>
+                </div>
+                <div class="stat-card">
+                    <strong>4</strong>
+                    <span>Scoring criteria</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="section-kicker">Leaderboard preview</p>
+                    <h2>Current rankings</h2>
+                </div>
+                <div class="leaderboard-list" th:if="${leaderboard != null and !leaderboard.isEmpty()}">
+                    <div class="leaderboard-item" th:each="row, iter : ${leaderboard}">
+                        <span class="rank" th:text="${iter.index + 1} + '.'">1.</span>
+                        <div>
+                            <strong th:text="${row.entry.title}">Film Title</strong>
+                            <small th:text="${row.entry.genre}">Genre</small>
+                        </div>
+                        <span class="score" th:text="${#numbers.formatDecimal(row.averageScore, 1, 2)} + ' / 10'">0.00 / 10</span>
+                    </div>
+                </div>
+                <div class="empty-state" th:unless="${leaderboard != null and !leaderboard.isEmpty()}">
+                    No entries have been scored yet. Submit a film and assign judges to get started.
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

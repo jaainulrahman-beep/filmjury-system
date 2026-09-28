@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judge Assignment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="container nav">
+            <div class="brand">
+                <span class="brand-mark">SF</span>
+                <span>Short Film Contest</span>
+            </div>
+            <nav>
+                <a href="/">Dashboard</a>
+                <a href="/entries">Submit Entry</a>
+                <a href="/judges">Judges</a>
+                <a href="/scores">Scoring</a>
+                <a href="/leaderboard">Leaderboard</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-shell">
+        <div class="container content-grid">
+            <section class="panel">
+                <p class="section-kicker">Judges</p>
+                <h2>Add a judge</h2>
+                <form class="form-card" th:object="${judge}" th:action="@{/judges}" method="post">
+                    <label>
+                        Judge name
+                        <input type="text" th:field="*{name}" placeholder="e.g. Aisha Chen" required>
+                    </label>
+                    <button type="submit" class="primary-btn">Create judge</button>
+                </form>
+
+                <div class="entry-list" th:if="${!#lists.isEmpty(judges)}">
+                    <div class="entry-item" th:each="judge : ${judges}">
+                        <strong th:text="${judge.name}">Judge name</strong>
+                        <small>Judge ID: <span th:text="${judge.id}">1</span></small>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel">
+                <p class="section-kicker">Assignments</p>
+                <h2>Assign judges to entries</h2>
+                <form class="form-card" th:action="@{/assignments}" method="post">
+                    <label>
+                        Entry
+                        <select name="entryId" required>
+                            <option value="" disabled selected>Select an entry</option>
+                            <option th:each="entry : ${entries}" th:value="${entry.id}" th:text="${entry.title}">Entry</option>
+                        </select>
+                    </label>
+                    <label>
+                        Judges
+                        <select name="judgeIds" multiple size="6" required>
+                            <option th:each="judge : ${judges}" th:value="${judge.id}" th:text="${judge.name}">Judge</option>
+                        </select>
+                    </label>
+                    <button type="submit" class="primary-btn">Assign judges</button>
+                </form>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

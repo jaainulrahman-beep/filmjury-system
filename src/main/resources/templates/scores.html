@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judge Score Entry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="container nav">
+            <div class="brand">
+                <span class="brand-mark">SF</span>
+                <span>Short Film Contest</span>
+            </div>
+            <nav>
+                <a href="/">Dashboard</a>
+                <a href="/entries">Submit Entry</a>
+                <a href="/judges">Judges</a>
+                <a href="/scores">Scoring</a>
+                <a href="/leaderboard">Leaderboard</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-shell">
+        <div class="container panel">
+            <p class="section-kicker">Judging panel</p>
+            <h2>Submit judge scores</h2>
+            <form class="form-card" th:action="@{/scores}" method="post">
+                <div class="assign-grid">
+                    <label>
+                        Judge
+                        <select name="judgeId" required>
+                            <option value="" disabled selected>Select a judge</option>
+                            <option th:each="judge : ${judges}" th:value="${judge.id}" th:text="${judge.name}">Judge</option>
+                        </select>
+                    </label>
+                    <label>
+                        Entry
+                        <select name="entryId" required>
+                            <option value="" disabled selected>Select an entry</option>
+                            <option th:each="entry : ${entries}" th:value="${entry.id}" th:text="${entry.title}">Entry</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="criteria-grid">
+                    <div class="score-field" th:each="criterion : ${criteria}">
+                        <label>
+                            <span th:text="${criterion}">Story</span>
+                            <input type="number" th:name="${criterion}" min="0" max="10" step="0.5" value="0" required>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="primary-btn">Save scores</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
