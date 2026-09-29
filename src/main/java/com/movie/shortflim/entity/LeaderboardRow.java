@@ -1,4 +1,4 @@
-package com.movie.shortflim;
+package com.movie.shortflim.entity;
 
 public class LeaderboardRow {
     private final FilmEntry entry;

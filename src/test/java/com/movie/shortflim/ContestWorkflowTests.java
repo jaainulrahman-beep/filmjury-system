@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
+import com.movie.shortflim.entity.FilmEntry;
+import com.movie.shortflim.entity.Judge;
+import com.movie.shortflim.service.ContestService;
+
 class ContestWorkflowTests {
 
     private final ContestService service = new ContestService();

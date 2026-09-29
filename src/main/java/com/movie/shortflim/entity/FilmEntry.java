@@ -1,4 +1,4 @@
-package com.movie.shortflim;
+package com.movie.shortflim.entity;
 
 public class FilmEntry {
     private Long id;

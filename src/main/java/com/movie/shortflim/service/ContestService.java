@@ -1,4 +1,4 @@
-package com.movie.shortflim;
+package com.movie.shortflim.service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,6 +10,10 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Service;
+
+import com.movie.shortflim.entity.FilmEntry;
+import com.movie.shortflim.entity.Judge;
+import com.movie.shortflim.entity.LeaderboardRow;
 
 @Service
 public class ContestService {

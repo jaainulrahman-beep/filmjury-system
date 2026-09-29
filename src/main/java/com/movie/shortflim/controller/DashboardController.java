@@ -1,4 +1,4 @@
-package com.movie.shortflim;
+package com.movie.shortflim.controller;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.movie.shortflim.entity.FilmEntry;
+import com.movie.shortflim.entity.Judge;
+import com.movie.shortflim.service.ContestService;
 
 @Controller
 public class DashboardController {
